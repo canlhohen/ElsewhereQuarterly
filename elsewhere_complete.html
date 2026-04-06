@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elsewhere Quarterly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── VARIABLES ── */
+:root {
+  --cream: #f7f3ed; --warm-white: #fdfaf6; --sand: #e8e0d4;
+  --tan: #c9bfb0; --brown: #7a6a58; --bark: #3d3028;
+  --rust: #b85c38; --rust-light: #f5e9e3; --green: #4a6741;
+  --serif: 'Lora', Georgia, serif; --sans: 'Nunito', system-ui, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--warm-white); color: var(--bark); font-size: 15px; line-height: 1.7; }
+a { color: inherit; text-decoration: none; cursor: pointer; }
+body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E"); }
+
+/* ── NAV ── */
+nav {
+  padding: 0 48px; height: 60px; display: flex; align-items: center;
+  justify-content: space-between; background: var(--warm-white);
+  border-bottom: 1px solid var(--sand); position: sticky; top: 0; z-index: 100;
+}
+.nav-links { display: flex; gap: 32px; }
+.nav-links a { font-size: 13px; font-weight: 500; color: var(--brown); transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--rust); }
+.nav-logo { font-family: var(--serif); font-size: 20px; font-weight: 600; font-style: italic; color: var(--bark); position: absolute; left: 50%; transform: translateX(-50%); }
+.nav-logo span { font-size: 11px; font-style: normal; letter-spacing: 0.18em; font-weight: 400; display: block; text-align: center; margin-top: -4px; color: var(--brown); font-family: var(--sans); }
+.nav-actions { display: flex; align-items: center; gap: 20px; }
+.nav-actions a { font-size: 13px; font-weight: 500; color: var(--brown); transition: color 0.2s; }
+.btn-sub { background: var(--rust) !important; color: white !important; padding: 8px 20px; border-radius: 2px; font-size: 12px !important; font-weight: 600 !important; transition: background 0.2s !important; }
+.btn-sub:hover { background: var(--bark) !important; }
+
+/* ── PAGE VIEWS ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── SHARED ── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+.section-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rust); margin-bottom: 16px; }
+.section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--tan); margin-bottom: 32px; display: flex; align-items: center; gap: 16px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--sand); }
+.read-link { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--bark); border-bottom: 1px solid var(--bark); padding-bottom: 2px; transition: color 0.2s; }
+.read-link::after { content: '→'; transition: transform 0.2s; }
+.read-link:hover { color: var(--rust); border-color: var(--rust); }
+.read-link:hover::after { transform: translateX(4px); }
+.pull { margin: 36px 0; padding: 28px 32px; background: var(--cream); border-left: 3px solid var(--rust); }
+.pull p { font-family: var(--serif); font-size: 21px; font-style: italic; font-weight: 400; color: var(--bark); line-height: 1.5; }
+.pull cite { display: block; margin-top: 12px; font-size: 11px; font-style: normal; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rust); font-family: var(--sans); }
+.btn-dark { display: inline-block; padding: 12px 28px; background: var(--bark); color: white; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; transition: background 0.2s; cursor: pointer; }
+.btn-dark:hover { background: var(--rust); }
+.btn-outline { display: inline-block; padding: 12px 28px; border: 1.5px solid var(--bark); color: var(--bark); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.2s; cursor: pointer; }
+.btn-outline:hover { background: var(--bark); color: white; }
+
+/* Cover colours */
+.cover-1 { background: linear-gradient(160deg,#2a1e18,#1a1410,#3a2820); }
+.cover-2 { background: linear-gradient(160deg,#1a2a15,#0d1a0a,#253820); }
+.cover-3 { background: linear-gradient(160deg,#1a152a,#100d1a,#251a35); }
+.cover-4 { background: linear-gradient(160deg,#2a2010,#1a1508,#352818); }
+.cover-5 { background: linear-gradient(160deg,#201520,#150d18,#2a1a28); }
+.portrait-1 { background: linear-gradient(160deg,#3d2e28,#2a1e18); }
+.portrait-2 { background: linear-gradient(160deg,#1a2a15,#0d1a0a); }
+.portrait-3 { background: linear-gradient(160deg,#1a1520,#100d18); }
+
+/* ───────────────────────────────────── */
+/* PAGE: HOME                            */
+/* ───────────────────────────────────── */
+.hero { padding: 72px 48px 0; max-width: 1200px; margin: 0 auto; }
+.issue-tag { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rust); margin-bottom: 32px; }
+.issue-tag::before { content: ''; display: block; width: 28px; height: 2px; background: var(--rust); }
+.hero-layout { display: grid; grid-template-columns: 5fr 4fr; gap: 64px; align-items: start; padding-bottom: 64px; border-bottom: 1px solid var(--sand); }
+.theme-word { font-family: var(--serif); font-size: clamp(80px,12vw,148px); font-weight: 400; font-style: italic; line-height: 0.88; color: var(--bark); margin-bottom: 24px; letter-spacing: -0.02em; }
+.theme-desc { font-size: 16px; color: var(--brown); line-height: 1.75; max-width: 460px; margin-bottom: 36px; border-left: 2px solid var(--tan); padding-left: 20px; }
+.featured-card { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--cream); border: 1px solid var(--sand); cursor: pointer; transition: box-shadow 0.3s; }
+.featured-card:hover { box-shadow: 6px 6px 0 var(--sand); }
+.feat-img { aspect-ratio: 3/4; position: relative; overflow: hidden; }
+.feat-img .initials { position: absolute; bottom:16px; left:16px; font-family:var(--serif); font-size:42px; font-style:italic; color:rgba(255,255,255,0.12); line-height:1; }
+.feat-body { padding: 28px 24px; display: flex; flex-direction: column; justify-content: space-between; }
+.piece-type { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rust); margin-bottom: 12px; }
+.piece-title { font-family: var(--serif); font-size: 22px; font-weight: 500; line-height: 1.3; color: var(--bark); margin-bottom: 10px; }
+.piece-deck { font-size: 13px; color: var(--brown); line-height: 1.65; flex: 1; margin-bottom: 20px; }
+.piece-meta { border-top: 1px solid var(--sand); padding-top: 14px; }
+.piece-author { font-size: 13px; font-weight: 600; color: var(--bark); }
+.piece-location { font-size: 12px; color: var(--brown); font-style: italic; font-family: var(--serif); }
+.issue-meta-row { display: flex; gap: 24px; margin-bottom: 28px; font-size: 12px; color: var(--tan); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.toc { list-style: none; }
+.toc-item { padding: 16px 0; border-bottom: 1px solid var(--sand); cursor: pointer; display: flex; gap: 16px; align-items: flex-start; transition: all 0.2s; }
+.toc-item:hover .toc-title { color: var(--rust); }
+.toc-item:first-child { border-top: 1px solid var(--sand); }
+.toc-pg { font-family: var(--serif); font-size: 12px; color: var(--tan); min-width: 24px; padding-top: 3px; font-style: italic; }
+.toc-title { font-family: var(--serif); font-size: 17px; font-weight: 500; color: var(--bark); line-height: 1.3; transition: color 0.2s; margin-bottom: 3px; }
+.toc-by { font-size: 12px; color: var(--brown); }
+.toc-by em { color: var(--rust); font-style: normal; font-weight: 600; }
+.more-section { padding: 56px 0; border-bottom: 1px solid var(--sand); }
+.cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 36px; }
+.card { cursor: pointer; }
+.card-img { aspect-ratio: 16/10; margin-bottom: 16px; position: relative; overflow: hidden; }
+.card-img-inner { width: 100%; height: 100%; transition: transform 0.5s ease; }
+.card:hover .card-img-inner { transform: scale(1.05); }
+.card-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rust); margin-bottom: 8px; }
+.card-title { font-family: var(--serif); font-size: 20px; font-weight: 500; line-height: 1.3; color: var(--bark); margin-bottom: 8px; transition: color 0.2s; }
+.card:hover .card-title { color: var(--rust); }
+.card-deck { font-size: 13px; color: var(--brown); line-height: 1.65; margin-bottom: 12px; }
+.card-author { font-size: 12px; color: var(--tan); font-weight: 600; }
+.about-strip { background: var(--cream); border-top: 1px solid var(--sand); border-bottom: 1px solid var(--sand); padding: 72px 48px; }
+.about-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: center; }
+.about-label { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rust); margin-bottom: 16px; }
+.about-heading { font-family: var(--serif); font-size: 38px; font-weight: 400; line-height: 1.2; color: var(--bark); margin-bottom: 20px; }
+.about-body { font-size: 15px; color: var(--brown); line-height: 1.8; margin-bottom: 16px; }
+.themes-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; background: var(--sand); border: 1px solid var(--sand); }
+.theme-block { background: var(--warm-white); padding: 32px 28px; cursor: pointer; transition: background 0.2s; }
+.theme-block:hover { background: var(--rust-light); }
+.theme-block:hover .theme-block-word { color: var(--rust); }
+.theme-season { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tan); margin-bottom: 10px; }
+.theme-block-word { font-family: var(--serif); font-size: 38px; font-weight: 400; font-style: italic; color: var(--bark); line-height: 1; transition: color 0.2s; margin-bottom: 8px; }
+.theme-block-desc { font-size: 12px; color: var(--brown); line-height: 1.6; }
+.sub-section { padding: 80px 48px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
+.sub-heading { font-family: var(--serif); font-size: 42px; font-weight: 400; line-height: 1.2; color: var(--bark); margin-bottom: 16px; }
+.sub-body { font-size: 15px; color: var(--brown); line-height: 1.8; margin-bottom: 28px; }
+.email-row { display: flex; gap: 0; max-width: 400px; }
+.email-row input { flex: 1; padding: 13px 16px; border: 1.5px solid var(--sand); border-right: none; font-family: var(--sans); font-size: 14px; background: white; color: var(--bark); outline: none; }
+.email-row input:focus { border-color: var(--rust); }
+.email-row button { padding: 13px 22px; background: var(--rust); color: white; border: 1.5px solid var(--rust); font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+.email-row button:hover { background: var(--bark); border-color: var(--bark); }
+.sub-note { margin-top: 12px; font-size: 12px; color: var(--tan); }
+.pricing { display: flex; flex-direction: column; gap: 12px; }
+.price-card { padding: 20px 24px; border: 1.5px solid var(--sand); background: white; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; display: flex; justify-content: space-between; align-items: center; }
+.price-card:hover, .price-card.feat { border-color: var(--rust); box-shadow: 4px 4px 0 var(--rust-light); }
+.price-card.feat { background: var(--rust-light); }
+.price-label { font-size: 14px; font-weight: 600; color: var(--bark); margin-bottom: 3px; }
+.price-desc { font-size: 12px; color: var(--brown); }
+.price-amount { font-family: var(--serif); font-size: 22px; font-weight: 500; color: var(--bark); text-align: right; white-space: nowrap; }
+.price-per { font-size: 11px; color: var(--tan); font-family: var(--sans); font-weight: 400; }
+
+/* ───────────────────────────────────── */
+/* PAGE: ABOUT                           */
+/* ───────────────────────────────────── */
+.about-hero { padding: 80px 48px 64px; max-width: 1200px; margin: 0 auto; border-bottom: 1px solid var(--sand); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+.page-title { font-family: var(--serif); font-size: clamp(52px,7vw,88px); font-weight: 400; font-style: italic; line-height: 0.92; color: var(--bark); letter-spacing: -0.02em; }
+.hero-intro { font-size: 17px; color: var(--brown); line-height: 1.85; border-left: 2px solid var(--tan); padding-left: 20px; }
+.two-col { display: grid; grid-template-columns: 240px 1fr; gap: 80px; padding: 72px 0; border-bottom: 1px solid var(--sand); }
+.col-label { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tan); padding-top: 6px; }
+.col-body h2 { font-family: var(--serif); font-size: 32px; font-weight: 400; color: var(--bark); margin-bottom: 24px; line-height: 1.25; }
+.col-body p { font-size: 16px; color: var(--brown); line-height: 1.85; margin-bottom: 20px; }
+.col-body p:last-child { margin-bottom: 0; }
+.principles-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; }
+.principle { padding: 32px; background: var(--cream); border: 1px solid var(--sand); }
+.principle-num { font-family: var(--serif); font-size: 40px; font-style: italic; color: var(--rust); opacity: 0.4; line-height: 1; margin-bottom: 16px; }
+.principle h3 { font-family: var(--serif); font-size: 18px; font-weight: 500; color: var(--bark); margin-bottom: 10px; line-height: 1.3; }
+.principle p { font-size: 13px; color: var(--brown); line-height: 1.7; }
+.team-card { display: grid; grid-template-columns: 160px 1fr; gap: 32px; align-items: start; }
+.team-portrait { aspect-ratio: 3/4; position: relative; overflow: hidden; }
+.team-initials { position: absolute; bottom: 12px; left: 14px; font-family: var(--serif); font-size: 36px; font-style: italic; color: rgba(255,255,255,0.15); }
+.team-name { font-family: var(--serif); font-size: 26px; font-weight: 500; color: var(--bark); margin-bottom: 4px; }
+.team-role { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rust); margin-bottom: 16px; }
+.team-bio p { font-size: 15px; color: var(--brown); line-height: 1.8; margin-bottom: 14px; }
+.contact-band { padding: 64px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 32px; }
+.contact-band h2 { font-family: var(--serif); font-size: 32px; font-weight: 400; color: var(--bark); margin-bottom: 8px; }
+.contact-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+/* ───────────────────────────────────── */
+/* PAGE: ISSUES                          */
+/* ───────────────────────────────────── */
+.issues-hero { padding: 72px 48px 48px; max-width: 1200px; margin: 0 auto; border-bottom: 1px solid var(--sand); }
+.current-issue { display: grid; grid-template-columns: 300px 1fr; gap: 56px; align-items: start; padding: 56px 0; border-bottom: 1px solid var(--sand); margin-bottom: 56px; cursor: pointer; }
+.current-issue:hover .issue-title { color: var(--rust); }
+.issue-cover { aspect-ratio: 3/4; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 28px 24px; }
+.cover-vol { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+.cover-theme { font-family: var(--serif); font-size: 44px; font-weight: 400; font-style: italic; color: white; line-height: 0.95; }
+.cover-season { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 8px; letter-spacing: 0.06em; }
+.issue-current-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rust); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.cdot { width: 7px; height: 7px; border-radius: 50%; background: var(--rust); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.issue-title { font-family: var(--serif); font-size: 44px; font-weight: 400; font-style: italic; color: var(--bark); margin-bottom: 12px; transition: color 0.2s; }
+.issue-meta { font-size: 12px; color: var(--tan); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 20px; }
+.issue-desc { font-size: 15px; color: var(--brown); line-height: 1.8; margin-bottom: 28px; max-width: 480px; }
+.toc-list { list-style: none; border-top: 1px solid var(--sand); }
+.toc-list-item { display: grid; grid-template-columns: 32px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--sand); }
+.tl-pg { font-family: var(--serif); font-size: 12px; color: var(--tan); font-style: italic; }
+.tl-title { font-family: var(--serif); font-size: 16px; font-weight: 400; color: var(--bark); }
+.tl-by { font-size: 12px; color: var(--brown); }
+.tl-by em { color: var(--rust); font-style: normal; font-weight: 600; }
+.coming-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+.coming-card { cursor: pointer; }
+.coming-cover { aspect-ratio: 3/4; margin-bottom: 14px; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px 16px; transition: transform 0.3s; background: var(--cream); border: 1px solid var(--sand); }
+.coming-card:hover .coming-cover { transform: translateY(-4px); }
+.coming-cover .cover-theme { font-size: 34px; color: var(--brown); }
+.coming-cover .cover-vol { color: var(--tan); }
+.coming-cover .cover-season { color: var(--tan); }
+.coming-label-text { font-size: 10px; color: var(--tan); letter-spacing: 0.06em; margin-bottom: 4px; }
+.coming-theme-text { font-family: var(--serif); font-size: 18px; font-weight: 400; font-style: italic; color: var(--bark); }
+
+/* ───────────────────────────────────── */
+/* PAGE: FIRST PERSON                    */
+/* ───────────────────────────────────── */
+.fp-hero { padding: 64px 48px 48px; max-width: 1200px; margin: 0 auto; border-bottom: 1px solid var(--sand); display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; }
+.fp-title { font-family: var(--serif); font-size: clamp(52px,8vw,96px); font-weight: 400; font-style: italic; line-height: 0.9; color: var(--bark); letter-spacing: -0.02em; }
+.fp-desc { font-size: 15px; color: var(--brown); line-height: 1.8; padding-left: 20px; border-left: 2px solid var(--tan); margin-bottom: 16px; }
+.fp-meta { font-size: 12px; color: var(--tan); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.fp-featured { padding: 56px 0 48px; border-bottom: 1px solid var(--sand); display: grid; grid-template-columns: 1fr 2fr; gap: 56px; align-items: start; cursor: pointer; }
+.fp-featured:hover .fp-feat-title { color: var(--rust); }
+.fp-portrait { aspect-ratio: 3/4; position: relative; overflow: hidden; }
+.fp-initials { position: absolute; bottom: 20px; left: 20px; font-family: var(--serif); font-size: 48px; font-weight: 400; font-style: italic; color: rgba(255,255,255,0.15); line-height: 1; letter-spacing: -0.02em; }
+.fp-meta-top { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rust); margin-bottom: 16px; }
+.fp-feat-title { font-family: var(--serif); font-size: clamp(28px,3.5vw,42px); font-weight: 400; line-height: 1.15; color: var(--bark); margin-bottom: 16px; transition: color 0.2s; }
+.fp-feat-sub { font-family: var(--serif); font-size: 18px; font-style: italic; color: var(--brown); margin-bottom: 20px; line-height: 1.5; }
+.fp-feat-intro { font-size: 15px; color: var(--brown); line-height: 1.8; margin-bottom: 28px; max-width: 520px; }
+.fp-byline { font-size: 12px; color: var(--tan); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px; }
+.fp-author { font-family: var(--serif); font-size: 17px; font-weight: 500; color: var(--bark); margin-bottom: 4px; }
+.fp-loc { font-family: var(--serif); font-size: 13px; font-style: italic; color: var(--brown); margin-bottom: 28px; }
+.fp-past-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 36px; }
+.fp-card { cursor: pointer; }
+.fp-card-portrait { aspect-ratio: 3/2; margin-bottom: 16px; position: relative; overflow: hidden; }
+.fp-card-portrait div { width: 100%; height: 100%; transition: transform 0.5s ease; }
+.fp-card:hover .fp-card-portrait div { transform: scale(1.05); }
+.fp-card-initials { position: absolute; bottom: 12px; left: 14px; font-family: var(--serif); font-size: 32px; font-style: italic; color: rgba(255,255,255,0.15); line-height: 1; }
+.fp-card-issue { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rust); margin-bottom: 6px; }
+.fp-card-title { font-family: var(--serif); font-size: 19px; font-weight: 500; line-height: 1.3; color: var(--bark); margin-bottom: 6px; transition: color 0.2s; }
+.fp-card:hover .fp-card-title { color: var(--rust); }
+.fp-card-desc { font-size: 13px; color: var(--brown); line-height: 1.6; margin-bottom: 10px; }
+.fp-card-author { font-size: 12px; color: var(--tan); font-weight: 600; }
+
+/* Full interview view */
+.interview-full { display: none; max-width: 720px; margin: 0 auto; padding: 64px 48px; }
+.interview-full.show { display: block; }
+.back-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brown); margin-bottom: 40px; cursor: pointer; transition: color 0.2s; }
+.back-btn::before { content: '←'; }
+.back-btn:hover { color: var(--rust); }
+.int-full-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rust); margin-bottom: 16px; }
+.int-full-title { font-family: var(--serif); font-size: clamp(32px,5vw,52px); font-weight: 400; line-height: 1.1; color: var(--bark); margin-bottom: 12px; letter-spacing: -0.01em; }
+.int-full-sub { font-family: var(--serif); font-size: 20px; font-style: italic; color: var(--brown); margin-bottom: 32px; }
+.int-full-portrait { width: 100%; aspect-ratio: 16/7; margin-bottom: 8px; overflow: hidden; }
+.int-full-portrait div { width: 100%; height: 100%; }
+.int-caption { font-size: 12px; color: var(--tan); margin-bottom: 40px; font-style: italic; font-family: var(--serif); }
+.int-intro { font-size: 17px; color: var(--brown); line-height: 1.85; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--sand); }
+.qa-block { margin-bottom: 40px; }
+.question { font-family: var(--serif); font-size: 19px; font-weight: 600; color: var(--bark); line-height: 1.4; margin-bottom: 16px; padding-left: 20px; border-left: 2px solid var(--rust); }
+.answer { font-size: 16px; color: var(--brown); line-height: 1.85; }
+.answer p { margin-bottom: 14px; }
+.answer p:last-child { margin-bottom: 0; }
+.inline-pull { margin: 36px 0; padding: 28px 32px; background: var(--cream); border-left: 3px solid var(--rust); }
+.inline-pull p { font-family: var(--serif); font-size: 22px; font-style: italic; font-weight: 400; color: var(--bark); line-height: 1.5; }
+.int-end { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--sand); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+.int-end h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tan); margin-bottom: 6px; }
+.int-end p { font-size: 13px; color: var(--brown); max-width: 400px; line-height: 1.7; }
+
+/* ───────────────────────────────────── */
+/* PAGE: SUBSCRIBE                       */
+/* ───────────────────────────────────── */
+.sub-hero { padding: 80px 48px 64px; max-width: 900px; margin: 0 auto; text-align: center; border-bottom: 1px solid var(--sand); }
+.sub-hero-title { font-family: var(--serif); font-size: clamp(40px,6vw,64px); font-weight: 400; font-style: italic; line-height: 1.1; color: var(--bark); margin-bottom: 20px; }
+.sub-hero-desc { font-size: 16px; color: var(--brown); line-height: 1.8; max-width: 520px; margin: 0 auto; }
+.pricing-wrap { max-width: 1100px; margin: 0 auto; padding: 72px 48px; }
+.pricing-note { text-align: center; margin-bottom: 48px; }
+.pricing-note p { font-size: 14px; color: var(--brown); line-height: 1.7; max-width: 560px; margin: 0 auto; }
+.plan-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-bottom: 20px; }
+.plan-grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; max-width: 720px; margin: 0 auto 56px; }
+.plan { padding: 36px 28px; border: 1.5px solid var(--sand); background: white; position: relative; transition: border-color 0.2s,box-shadow 0.2s; cursor: pointer; }
+.plan:hover { border-color: var(--rust); box-shadow: 6px 6px 0 var(--rust-light); }
+.plan.plan-feat { border-color: var(--rust); background: var(--rust-light); }
+.plan-badge { display: none; position: absolute; top: -12px; left: 28px; background: var(--rust); color: white; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 12px; }
+.plan.plan-feat .plan-badge { display: block; }
+.plan-name { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brown); margin-bottom: 12px; }
+.plan-price { font-family: var(--serif); font-size: 44px; font-weight: 400; color: var(--bark); line-height: 1; margin-bottom: 4px; }
+.plan-price span { font-size: 18px; }
+.plan-per { font-size: 12px; color: var(--tan); margin-bottom: 20px; font-weight: 600; }
+.plan-desc { font-size: 13px; color: var(--brown); line-height: 1.65; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--sand); }
+.plan-features { list-style: none; }
+.plan-features li { font-size: 13px; color: var(--brown); padding: 6px 0; display: flex; align-items: flex-start; gap: 8px; }
+.plan-features li::before { content: '—'; color: var(--rust); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.plan-cta { display: block; margin-top: 24px; padding: 12px; text-align: center; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: var(--bark); color: white; transition: background 0.2s; cursor: pointer; }
+.plan-cta:hover { background: var(--rust); }
+.plan.plan-feat .plan-cta { background: var(--rust); }
+.plan.plan-feat .plan-cta:hover { background: var(--bark); }
+.solidarity-box { background: var(--cream); border: 1px solid var(--sand); padding: 36px 48px; max-width: 1100px; margin: 0 auto 72px; display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: center; }
+.sol-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rust); margin-bottom: 8px; }
+.sol-title { font-family: var(--serif); font-size: 24px; font-weight: 400; color: var(--bark); line-height: 1.3; }
+.sol-body p { font-size: 14px; color: var(--brown); line-height: 1.75; margin-bottom: 12px; }
+.faq-wrap { max-width: 720px; margin: 0 auto; padding: 0 48px 72px; }
+.faq-item { padding: 20px 0; border-bottom: 1px solid var(--sand); }
+.faq-q { font-family: var(--serif); font-size: 17px; font-weight: 500; color: var(--bark); margin-bottom: 8px; }
+.faq-a { font-size: 14px; color: var(--brown); line-height: 1.75; }
+
+/* ───────────────────────────────────── */
+/* PAGE: SUBMIT                          */
+/* ───────────────────────────────────── */
+.sub-page-hero { padding: 80px 48px 64px; max-width: 1200px; margin: 0 auto; border-bottom: 1px solid var(--sand); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+.open-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: var(--green); letter-spacing: 0.06em; }
+.open-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+.call-box { background: var(--cream); border: 1.5px solid var(--rust); padding: 36px; margin-bottom: 28px; }
+.call-theme-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rust); margin-bottom: 12px; }
+.call-word { font-family: var(--serif); font-size: 52px; font-weight: 400; font-style: italic; color: var(--bark); line-height: 1; margin-bottom: 16px; }
+.call-desc { font-size: 15px; color: var(--brown); line-height: 1.75; margin-bottom: 20px; }
+.call-deadline { font-size: 12px; font-weight: 700; color: var(--bark); letter-spacing: 0.06em; }
+.call-deadline span { color: var(--rust); }
+.pay-band { padding: 28px 32px; background: var(--bark); color: white; margin: 28px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.pay-band h3 { font-family: var(--serif); font-size: 22px; font-weight: 400; font-style: italic; }
+.pay-band p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; max-width: 400px; }
+.pay-amount { font-family: var(--serif); font-size: 48px; font-weight: 400; color: var(--rust); line-height: 1; white-space: nowrap; }
+.pay-amount span { font-size: 20px; }
+.what-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+.what-item { padding: 20px; background: var(--cream); border: 1px solid var(--sand); }
+.what-item h4 { font-family: var(--serif); font-size: 16px; font-weight: 500; color: var(--bark); margin-bottom: 6px; }
+.what-item p { font-size: 13px; color: var(--brown); line-height: 1.6; }
+.wc { font-size: 11px; font-weight: 700; color: var(--rust); letter-spacing: 0.06em; margin-top: 6px; }
+.form-section { padding: 72px 0; }
+.sub-form { display: grid; gap: 24px; max-width: 720px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brown); }
+.field input, .field select, .field textarea { padding: 12px 14px; border: 1.5px solid var(--sand); font-family: var(--sans); font-size: 14px; background: white; color: var(--bark); outline: none; transition: border-color 0.2s; border-radius: 0; -webkit-appearance: none; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--rust); }
+.field textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+.field.full { grid-column: 1 / -1; }
+.field-note { font-size: 11px; color: var(--tan); margin-top: 2px; }
+.checkbox-field { display: flex; align-items: flex-start; gap: 12px; }
+.checkbox-field input[type="checkbox"] { width: 16px; height: 16px; margin-top: 3px; accent-color: var(--rust); flex-shrink: 0; cursor: pointer; }
+.checkbox-field label { font-size: 13px; color: var(--brown); line-height: 1.6; cursor: pointer; font-weight: 400; text-transform: none; letter-spacing: 0; }
+.submit-btn { padding: 16px 40px; background: var(--rust); color: white; border: none; font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+.submit-btn:hover { background: var(--bark); }
+.form-note { font-size: 12px; color: var(--tan); line-height: 1.65; max-width: 560px; margin-top: 8px; }
+
+/* ── NEWSLETTER BAND ── */
+.newsletter { background: var(--cream); border-top: 1px solid var(--sand); border-bottom: 1px solid var(--sand); padding: 48px; text-align: center; }
+.newsletter h3 { font-family: var(--serif); font-size: 28px; font-weight: 400; margin-bottom: 8px; }
+.newsletter p { font-size: 14px; color: var(--brown); margin-bottom: 24px; }
+.nl-row { display: flex; gap: 0; max-width: 380px; margin: 0 auto; }
+.nl-row input { flex: 1; padding: 12px 16px; border: 1.5px solid var(--sand); border-right: none; font-family: var(--sans); font-size: 14px; background: white; color: var(--bark); outline: none; }
+.nl-row input:focus { border-color: var(--rust); }
+.nl-row button { padding: 12px 22px; background: var(--rust); color: white; border: 1.5px solid var(--rust); font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+.nl-row button:hover { background: var(--bark); border-color: var(--bark); }
+
+/* ── FOOTER ── */
+footer { background: var(--bark); color: var(--sand); padding: 56px 48px 32px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 32px; }
+.footer-logo { font-family: var(--serif); font-size: 26px; font-style: italic; font-weight: 600; color: var(--cream); margin-bottom: 12px; }
+.footer-tagline { font-size: 13px; color: var(--tan); line-height: 1.7; max-width: 260px; }
+.footer-col h4 { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--tan); margin-bottom: 16px; }
+.footer-col a { display: block; font-size: 13px; color: rgba(201,191,176,0.7); margin-bottom: 10px; transition: color 0.2s; }
+.footer-col a:hover { color: var(--cream); }
+.footer-bottom { display: flex; justify-content: space-between; font-size: 11px; color: rgba(201,191,176,0.4); padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); }
+
+/* ── ANIMATIONS ── */
+@keyframes riseIn { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+.theme-word { animation: riseIn 0.8s ease both; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; height: 52px; }
+  .nav-links { display: none; }
+  .nav-logo { position: static; transform: none; font-size: 18px; }
+  .nav-actions a:not(.btn-sub) { display: none; }
+  .container, .hero { padding-left: 20px; padding-right: 20px; }
+  .hero-layout { grid-template-columns: 1fr; gap: 36px; }
+  .theme-word { font-size: clamp(56px,16vw,96px); }
+  .featured-card { grid-template-columns: 1fr; }
+  .cards { grid-template-columns: 1fr; }
+  .about-inner { grid-template-columns: 1fr; gap: 36px; }
+  .themes-row { grid-template-columns: repeat(2,1fr); }
+  .sub-section { padding: 48px 20px; grid-template-columns: 1fr; gap: 36px; }
+  .about-hero, .sub-page-hero, .fp-hero, .issues-hero { grid-template-columns: 1fr; gap: 28px; padding: 48px 20px 36px; }
+  .two-col { grid-template-columns: 1fr; gap: 20px; padding: 48px 0; }
+  .principles-grid { grid-template-columns: 1fr; gap: 20px; }
+  .team-card { grid-template-columns: 1fr; }
+  .current-issue { grid-template-columns: 1fr; gap: 28px; }
+  .coming-grid { grid-template-columns: repeat(2,1fr); }
+  .fp-featured { grid-template-columns: 1fr; gap: 28px; }
+  .fp-past-grid { grid-template-columns: 1fr; }
+  .interview-full { padding: 40px 20px; }
+  .plan-grid { grid-template-columns: 1fr; }
+  .plan-grid-2 { grid-template-columns: 1fr; max-width: 100%; }
+  .solidarity-box { grid-template-columns: 1fr; gap: 20px; }
+  .faq-wrap { padding: 0 20px 48px; }
+  .pricing-wrap { padding: 48px 20px; }
+  .sub-hero { padding: 48px 20px 40px; }
+  .form-row { grid-template-columns: 1fr; }
+  .what-grid { grid-template-columns: 1fr; }
+  .pay-band { flex-direction: column; align-items: flex-start; }
+  .contact-band { flex-direction: column; padding: 48px 0; }
+  .about-strip { padding: 48px 20px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+  footer { padding: 40px 20px 24px; }
+  .footer-bottom { flex-direction: column; gap: 8px; }
+  .newsletter { padding: 40px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav>
+  <div class="nav-links">
+    <a onclick="showPage('home')" id="nav-home" class="active">Read</a>
+    <a onclick="showPage('issues')" id="nav-issues">Issues</a>
+    <a onclick="showPage('firstperson')" id="nav-firstperson">First Person</a>
+    <a onclick="showPage('about')" id="nav-about">About</a>
+    <a onclick="showPage('submit')" id="nav-submit">Submit</a>
+  </div>
+  <a onclick="showPage('home')" class="nav-logo">Elsewhere <span>QUARTERLY</span></a>
+  <div class="nav-actions">
+    <a href="#">Sign in</a>
+    <a onclick="showPage('subscribe')" class="btn-sub">Subscribe</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE: HOME                              -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <div class="hero">
+    <div class="issue-tag">Current Issue — Summer 2026</div>
+    <div class="hero-layout">
+      <div>
+        <h1 class="theme-word">Bombs</h1>
+        <p class="theme-desc">What does explosive violence leave behind? In our first issue, writers from Lebanon, Laos, Sudan, and Iraq give shape to what most accounts leave formless.</p>
+        <div class="featured-card">
+          <div class="feat-img cover-1"><div class="initials">FK</div></div>
+          <div class="feat-body">
+            <div>
+              <div class="piece-type">Essay</div>
+              <div class="piece-title">The Sound Before the Sound</div>
+              <div class="piece-deck">A childhood in southern Lebanon, reconstructed from memory, rubble, and the particular silence that follows.</div>
+            </div>
+            <div class="piece-meta">
+              <div class="piece-author">Fatima Khalil</div>
+              <div class="piece-location">Beirut, Lebanon</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="issue-meta-row"><span>Vol. 01</span><span>No. 01</span><span>52 pages</span></div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--tan);margin-bottom:16px;">In this issue</div>
+        <ul class="toc">
+          <li class="toc-item"><span class="toc-pg">04</span><div><div class="toc-title">The Sound Before the Sound</div><div class="toc-by">Essay — <em>Fatima Khalil</em></div></div></li>
+          <li class="toc-item"><span class="toc-pg">14</span><div><div class="toc-title">What the Body Keeps</div><div class="toc-by">Reportage — <em>Dr. Amara Diallo</em></div></div></li>
+          <li class="toc-item"><span class="toc-pg">24</span><div><div class="toc-title">Night Geometry</div><div class="toc-by">Poetry — <em>Yasir Osman</em></div></div></li>
+          <li class="toc-item"><span class="toc-pg">32</span><div><div class="toc-title">The Ordnance Clearers of Laos</div><div class="toc-by">Reportage — <em>Khamla Bounnavong</em></div></div></li>
+          <li class="toc-item"><span class="toc-pg">42</span><div><div class="toc-title">The Cartography of Loss</div><div class="toc-by">Photo Essay — <em>Nour Ibrahim</em></div></div></li>
+          <li class="toc-item"><span class="toc-pg">50</span><div><div class="toc-title">The Naming of Things</div><div class="toc-by">Fiction — <em>Rasha El-Amin</em></div></div></li>
+        </ul>
+        <a class="read-link" style="margin-top:20px;display:inline-flex;" onclick="showPage('issues')">Read the full issue</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="more-section">
+      <div class="section-label">More from this issue</div>
+      <div class="cards">
+        <div class="card"><div class="card-img"><div class="card-img-inner cover-2"></div></div><div class="card-label">Testimony</div><div class="card-title">A House Has More than Four Walls</div><div class="card-deck">On what is lost when buildings fall — and what, unexpectedly, survives the blast radius.</div><div class="card-author">Mariam Tahir · Mosul, Iraq</div></div>
+        <div class="card"><div class="card-img"><div class="card-img-inner cover-3"></div></div><div class="card-label">Reportage</div><div class="card-title">Fifty Years of Clearance</div><div class="card-deck">The Plain of Jars in Laos is still being made safe for children. An account from the ground.</div><div class="card-author">Khamla Bounnavong · Xieng Khouang</div></div>
+        <div class="card"><div class="card-img"><div class="card-img-inner cover-4"></div></div><div class="card-label">Fiction</div><div class="card-title">The Naming of Things</div><div class="card-deck">A woman catalogues the objects of her destroyed neighbourhood before the bulldozers arrive.</div><div class="card-author">Rasha El-Amin · Cairo, Egypt</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-strip">
+    <div class="about-inner">
+      <div>
+        <div class="about-label">About the journal</div>
+        <h2 class="about-heading">One theme.<br>Many voices.<br>Every quarter.</h2>
+        <p class="about-body">Each issue is built around a single word — a theme that functions as an open invitation. Writers, farmers, survivors, artists and journalists interpret it freely.</p>
+        <p class="about-body">The common thread is proximity to experience. We publish the person who lived it alongside the person who studied it.</p>
+        <a class="read-link" style="margin-top:4px;display:inline-flex;" onclick="showPage('about')">Read our manifesto</a>
+      </div>
+      <div>
+        <div class="pull" style="margin:0;"><p>"A theme like <em>Land</em> can yield a legal essay on indigenous title, a poem about soil, a photo essay on dispossession, and a piece of flash fiction — all in the same issue."</p><cite>From the editorial manifesto</cite></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div style="padding:56px 0;border-bottom:1px solid var(--sand);">
+      <div class="section-label">Coming issues</div>
+      <div class="themes-row">
+        <div class="theme-block"><div class="theme-season">Autumn 2026</div><div class="theme-block-word">Land</div><div class="theme-block-desc">Ownership, dispossession, soil, and the politics of where you are allowed to stand.</div></div>
+        <div class="theme-block"><div class="theme-season">Winter 2026</div><div class="theme-block-word">Crops</div><div class="theme-block-desc">Food sovereignty, farming under occupation, seeds, and hunger as a tool of war.</div></div>
+        <div class="theme-block"><div class="theme-season">Spring 2027</div><div class="theme-block-word">Water</div><div class="theme-block-desc">Rivers as borders, drought, flooding, access, and the right to drink.</div></div>
+        <div class="theme-block"><div class="theme-season">Summer 2027</div><div class="theme-block-word">Borders</div><div class="theme-block-desc">Checkpoints, crossings, statelessness, and the cost of a passport.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-section">
+    <div>
+      <h2 class="sub-heading">Read the voices that rarely get a byline.</h2>
+      <p class="sub-body">A quarterly journal of testimony, journalism, poetry, and fiction. No algorithm. No noise. Four issues a year, built around a single theme.</p>
+      <div class="email-row"><input type="email" placeholder="your@email.com"><button>Join us</button></div>
+      <p class="sub-note">Free newsletter — or subscribe for full access below.</p>
+    </div>
+    <div class="pricing">
+      <div class="price-card"><div><div class="price-label">Digital</div><div class="price-desc">Full archive · PDF downloads · All articles</div></div><div><div class="price-amount">€5 <span class="price-per">/ month</span></div></div></div>
+      <div class="price-card feat"><div><div class="price-label">Print + Digital</div><div class="price-desc">Physical copy posted · Full digital access</div></div><div><div class="price-amount">€25 <span class="price-per">/ quarter</span></div></div></div>
+      <div class="price-card"><div><div class="price-label">Supporter</div><div class="price-desc">Digital + name in masthead · Early access</div></div><div><div class="price-amount">€10 <span class="price-per">/ month</span></div></div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE: ABOUT                             -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-about">
+  <div class="about-hero container" style="padding-top:80px;padding-bottom:64px;border-bottom:1px solid var(--sand);">
+    <div><div class="section-tag">About the journal</div><h1 class="page-title">Elsewhere<br>Quarterly</h1></div>
+    <div style="padding-top:16px;"><p class="hero-intro">A quarterly journal built around a single rotating theme each issue. The theme is an invitation, not a brief. What you make of it is entirely your own.</p></div>
+  </div>
+  <div class="container">
+    <div class="two-col">
+      <div class="col-label">The manifesto</div>
+      <div class="col-body">
+        <h2>We publish the person closest to the story.</h2>
+        <p>Elsewhere Quarterly exists because the voices with the most direct relationship to an experience are rarely the ones doing the publishing. A farmer who watched a bomb destroy his field knows something that no analyst, no journalist parachuted in for a week, and no academic writing from a university in another continent can replicate.</p>
+        <div class="pull"><p>"The standard is proximity to experience — direct, accountable, earned. A writer from Ohio who survived a bombing has as much right to speak on that theme as anyone."</p></div>
+        <p>We do not restrict by geography. We restrict by quality of witness. We pay our writers. We edit in conversation, not over them. We protect their sources. We give contributors five subscriptions to share with their communities, because we believe the people we write about should be able to read what we publish about them.</p>
+      </div>
+    </div>
+    <div style="padding:72px 0;border-bottom:1px solid var(--sand);">
+      <div class="section-label">How we work</div>
+      <div class="principles-grid">
+        <div class="principle"><div class="principle-num">01</div><h3>The theme is an invitation</h3><p>Each issue word is an open prompt. Contributors interpret it in any direction. The theme creates coherence — it does not impose it.</p></div>
+        <div class="principle"><div class="principle-num">02</div><h3>Proximity over distance</h3><p>The editorial standard is the writer's relationship to their subject — direct, accountable, earned. We publish the person who lived it alongside the person who studied it.</p></div>
+        <div class="principle"><div class="principle-num">03</div><h3>Conversation, not correction</h3><p>We edit closely and honestly. Nothing is changed without the contributor's agreement. The final text belongs to both of us.</p></div>
+        <div class="principle"><div class="principle-num">04</div><h3>Pay is not optional</h3><p>We pay €200 per published piece from Issue 1. This is a statement about the value of the work, not generosity.</p></div>
+        <div class="principle"><div class="principle-num">05</div><h3>Source protection is absolute</h3><p>Anonymous sources remain anonymous. We follow the Dart Center for Journalism and Trauma guidelines.</p></div>
+        <div class="principle"><div class="principle-num">06</div><h3>The communities we write about should read us</h3><p>Geographic pricing, free access for low-income readers, and five complimentary subscriptions per contributor.</p></div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="col-label">The editor</div>
+      <div class="team-card">
+        <div class="team-portrait portrait-1"><div class="team-initials">CH</div></div>
+        <div>
+          <div class="team-name">Canyon Hohenstein</div>
+          <div class="team-role">Editor-in-Chief</div>
+          <div class="team-bio">
+            <p>Canyon Hohenstein is a writer and journalist based in Madrid, Spain, originally from Belgrade, Montana. His book <em>Who Tames the Flames?</em> documents the lives of prisoners who fight wildfires — a project built on the same values as Elsewhere Quarterly: sourcing voices from outside mainstream attention, building trust with subjects in difficult circumstances, and producing long-form narrative from firsthand testimony.</p>
+            <p>He conducted the last recorded interview with Patrick Hemingway. His work has appeared in Montana Quarterly, Mountain Outlaw, Wildfire Today, and other publications.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-band">
+      <div><h2>Get in touch.</h2><p>For submissions, enquiries, institutional subscriptions, or press.</p><p style="margin-top:6px;font-size:14px;color:var(--rust);font-weight:600;">editor@elsewherequarterly.com</p></div>
+      <div class="contact-btns">
+        <a onclick="showPage('submit')" class="btn-dark">Submit writing</a>
+        <a onclick="showPage('subscribe')" class="btn-outline">Subscribe</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE: ISSUES                            -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-issues">
+  <div class="issues-hero"><div class="section-tag">All issues</div><h1 class="page-title" style="font-size:clamp(44px,6vw,72px);font-family:var(--serif);font-style:italic;font-weight:400;color:var(--bark);">The archive.</h1><p style="font-size:15px;color:var(--brown);max-width:520px;margin-top:12px;">Every issue of Elsewhere Quarterly. One theme per issue. Four times a year.</p></div>
+  <div class="container">
+    <div class="current-issue">
+      <div class="issue-cover cover-1"><div class="cover-vol">Vol. 01 · No. 01</div><div class="cover-theme">Bombs</div><div class="cover-season">Summer 2026</div></div>
+      <div>
+        <div class="issue-current-tag"><div class="cdot"></div> Current Issue</div>
+        <h2 class="issue-title">Bombs</h2>
+        <div class="issue-meta">Vol. 01 · No. 01 · Summer 2026 · 72 pages</div>
+        <p class="issue-desc">What does explosive violence leave behind? Six writers from Lebanon, Sudan, Laos, Iraq, Egypt, and Montana respond to a single word.</p>
+        <ul class="toc-list">
+          <li class="toc-list-item"><span class="tl-pg">04</span><div><div class="tl-title">The Sound Before the Sound</div><div class="tl-by">Essay — <em>Fatima Khalil</em> · Beirut</div></div></li>
+          <li class="toc-list-item"><span class="tl-pg">16</span><div><div class="tl-title">What the Body Keeps</div><div class="tl-by">Reportage — <em>Dr. Amara Diallo</em> · Freetown</div></div></li>
+          <li class="toc-list-item"><span class="tl-pg">26</span><div><div class="tl-title">Night Geometry</div><div class="tl-by">Poetry — <em>Yasir Osman</em> · Khartoum</div></div></li>
+          <li class="toc-list-item"><span class="tl-pg">34</span><div><div class="tl-title">Fifty Years of Clearance</div><div class="tl-by">Reportage — <em>Khamla Bounnavong</em> · Laos</div></div></li>
+          <li class="toc-list-item"><span class="tl-pg">48</span><div><div class="tl-title">The Cartography of Loss</div><div class="tl-by">Photo Essay — <em>Nour Ibrahim</em> · Cairo</div></div></li>
+          <li class="toc-list-item"><span class="tl-pg">62</span><div><div class="tl-title">The Naming of Things</div><div class="tl-by">Fiction — <em>Rasha El-Amin</em> · Cairo</div></div></li>
+        </ul>
+        <a class="btn-dark" style="margin-top:20px;display:inline-block;">Read Issue 1</a>
+      </div>
+    </div>
+    <div class="section-label">Coming issues</div>
+    <div class="coming-grid" style="margin-bottom:64px;">
+      <div class="coming-card"><div class="coming-cover cover-2"><div class="cover-vol">Vol. 01 · No. 02</div><div class="cover-theme">Land</div><div class="cover-season">Autumn 2026</div></div><div class="coming-label-text">Next issue</div><div class="coming-theme-text">Land</div></div>
+      <div class="coming-card"><div class="coming-cover"><div class="cover-vol">Vol. 01 · No. 03</div><div class="cover-theme">Crops</div><div class="cover-season">Winter 2026</div></div><div class="coming-label-text">Issue 3</div><div class="coming-theme-text">Crops</div></div>
+      <div class="coming-card"><div class="coming-cover"><div class="cover-vol">Vol. 02 · No. 01</div><div class="cover-theme">Water</div><div class="cover-season">Spring 2027</div></div><div class="coming-label-text">Issue 4</div><div class="coming-theme-text">Water</div></div>
+      <div class="coming-card"><div class="coming-cover"><div class="cover-vol">Vol. 02 · No. 02</div><div class="cover-theme">Borders</div><div class="cover-season">Summer 2027</div></div><div class="coming-label-text">Issue 5</div><div class="coming-theme-text">Borders</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE: FIRST PERSON                      -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-firstperson">
+  <div id="fp-index">
+    <div class="fp-hero container" style="padding-top:64px;padding-bottom:48px;border-bottom:1px solid var(--sand);">
+      <div><div class="section-tag">Conversations with contributors</div><h1 class="fp-title">First<br>Person</h1></div>
+      <div><p class="fp-desc">Between issues, we sit down with the writers, journalists, and artists who contribute to Elsewhere Quarterly. Eight to ten questions. The conversation as it happened.</p><div class="fp-meta">Published mid-cycle · One conversation per issue</div></div>
+    </div>
+    <div class="container">
+      <div class="fp-featured">
+        <div class="fp-portrait portrait-1"><div class="fp-initials">FK</div></div>
+        <div>
+          <div class="fp-meta-top">Issue 1 · Bombs · First Person</div>
+          <h2 class="fp-feat-title">On rubble, memory, and the sound a house makes when it falls</h2>
+          <p class="fp-feat-sub">A conversation with Fatima Khalil</p>
+          <p class="fp-feat-intro">Fatima Khalil grew up in southern Lebanon during a decade of recurring bombardment. Her essay for Issue 1, <em>The Sound Before the Sound</em>, reconstructs her childhood from fragments — a doorframe, a smell, a particular quality of silence. We spoke about writing from inside catastrophe, the limits of language, and why she mistrusts the word <em>survivor</em>.</p>
+          <div class="fp-byline">Contributor</div>
+          <div class="fp-author">Fatima Khalil</div>
+          <div class="fp-loc">Beirut, Lebanon</div>
+          <a class="read-link" onclick="showInterview()">Read the conversation</a>
+          <div class="pull" style="margin-top:28px;"><p>"The house didn't disappear. It became a different kind of presence. You learn to live alongside absence the way you learn to live alongside a scar."</p><cite>Fatima Khalil — First Person, Issue 1</cite></div>
+        </div>
+      </div>
+      <div style="padding:56px 0;">
+        <div class="section-label">Previous conversations</div>
+        <div class="fp-past-grid">
+          <div class="fp-card"><div class="fp-card-portrait"><div class="portrait-2"></div><div class="fp-card-initials">YO</div></div><div class="fp-card-issue">Issue 1 · Bombs</div><div class="fp-card-title">On writing poetry in a city at war with itself</div><div class="fp-card-desc">Yasir Osman on the Night Geometry sequence, the ethics of beauty in catastrophe, and why he writes in Arabic first.</div><div class="fp-card-author">Yasir Osman · Khartoum, Sudan</div></div>
+          <div class="fp-card"><div class="fp-card-portrait"><div class="portrait-3"></div><div class="fp-card-initials">KB</div></div><div class="fp-card-issue">Issue 1 · Bombs</div><div class="fp-card-title">Fifty years of clearance: what the Plain of Jars still holds</div><div class="fp-card-desc">Khamla Bounnavong on growing up near unexploded ordnance and what foreign journalists miss.</div><div class="fp-card-author">Khamla Bounnavong · Xieng Khouang, Laos</div></div>
+          <div class="fp-card"><div class="fp-card-portrait"><div class="cover-4" style="width:100%;height:100%;"></div><div class="fp-card-initials">NI</div></div><div class="fp-card-issue">Issue 1 · Bombs</div><div class="fp-card-title">What a photograph can hold that a word cannot</div><div class="fp-card-desc">Nour Ibrahim on the ethics of photographing destruction and the image she chose not to take.</div><div class="fp-card-author">Nour Ibrahim · Cairo, Egypt</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="interview-full" id="fp-interview">
+    <div class="back-btn" onclick="hideInterview()">All conversations</div>
+    <div class="int-full-tag">First Person · Issue 1 · Bombs</div>
+    <h1 class="int-full-title">On rubble, memory, and the sound a house makes when it falls</h1>
+    <p class="int-full-sub">A conversation with Fatima Khalil</p>
+    <div class="int-full-portrait"><div class="portrait-1"></div></div>
+    <p class="int-caption">Fatima Khalil. Beirut, Lebanon, 2025.</p>
+    <p class="int-intro">Fatima Khalil grew up in southern Lebanon during a decade of recurring bombardment. Her essay for Issue 1, <em>The Sound Before the Sound</em>, reconstructs her childhood from fragments — a doorframe, a smell, a particular quality of silence that preceded destruction. We spoke by video call over two sessions. This is an edited transcript.</p>
+    <div class="qa-block"><p class="question">Your essay opens with a sound rather than an image. Was that a deliberate choice from the beginning, or did it emerge in revision?</p><div class="answer"><p>It emerged from the failure of the image. I tried many times to begin with what I saw and it always felt like a photograph of someone else's memory. But the sound was still inside me in a way the images were not. It lives in the body differently.</p><p>There is also something I wanted to say about anticipation. The sound before the sound — the particular quality of silence, the way the air changed — was in some ways more defining than the explosion itself. We learned to read that silence. It educated us.</p></div></div>
+    <div class="inline-pull"><p>"The house didn't disappear. It became a different kind of presence. You learn to live alongside absence the way you learn to live alongside a scar."</p></div>
+    <div class="qa-block"><p class="question">You use the word "rubble" only once in the piece, very late. Why the restraint around that word?</p><div class="answer"><p>Because rubble is what other people call it. For us it was still the house. Still the kitchen. Still the room where I slept. To use rubble would have been to accept someone else's language, someone else's timeline — in which the destruction was already complete, already categorised, already past.</p><p>I wanted to stay in the before. In the tense where the house was still a house.</p></div></div>
+    <div class="qa-block"><p class="question">You told me you mistrust the word "survivor." Can you say more about that?</p><div class="answer"><p>It places you in a category defined entirely by what happened to you. It makes the event the primary fact of your identity. And it creates a binary — survivor and non-survivor — as if the alternative were simply death. There is an enormous territory between those two positions that the word erases.</p></div></div>
+    <div class="qa-block"><p class="question">What did you want readers outside Lebanon to understand that they typically don't?</p><div class="answer"><p>That normalcy is not the opposite of catastrophe. That people cook and argue and fall in love and get bored inside catastrophe. When you imagine us as only suffering, you make us into something less than human. You make the catastrophe our entire substance. And then you can feel sad about it for a moment and move on.</p><p>I wanted to make it harder to move on.</p></div></div>
+    <div class="qa-block"><p class="question">Was there anything you chose not to include?</p><div class="answer"><p>Almost everything. There is a great deal that I know but that does not belong in writing yet, or perhaps ever. I am wary of the assumption that all experience should be made into language.</p></div></div>
+    <div class="qa-block"><p class="question">What are you working on now?</p><div class="answer"><p>A longer piece about return — about going back to a place that no longer contains what you went back for. It will probably take another three years.</p></div></div>
+    <div class="qa-block"><p class="question">What are you reading?</p><div class="answer"><p>Elias Khoury's <em>Gate of the Sun</em>, again. Antoine Cassar's poetry. And a very old cookbook my grandmother left behind, which I am reading as literature.</p></div></div>
+    <div class="int-end"><div><h4>About the contributor</h4><p>Fatima Khalil is a writer and translator based in Beirut. <em>The Sound Before the Sound</em> is her first publication in an English-language literary journal.</p></div><div style="text-align:right;"><p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--tan);margin-bottom:6px;">Read her piece in</p><a class="read-link" onclick="hideInterview();showPage('issues')">Issue 1 — Bombs</a></div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE: SUBSCRIBE                         -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-subscribe">
+  <div class="sub-hero"><div class="section-tag">Subscribe</div><h1 class="sub-hero-title">Read the voices that rarely get a byline.</h1><p class="sub-hero-desc">Four issues a year, built around a single theme. No algorithm. No noise. Just writing from people closest to the story.</p></div>
+  <div class="pricing-wrap">
+    <div class="pricing-note"><p>We believe writing about the world should be readable by the world. <strong>Every Supporter subscription funds two Solidarity subscriptions.</strong> If you cannot afford a subscription, you can have one — no questions asked.</p></div>
+    <div class="plan-grid">
+      <div class="plan"><div class="plan-name">Digital</div><div class="plan-price"><span>€</span>5</div><div class="plan-per">per month · or €45/year</div><div class="plan-desc">Full access to every article, all back issues, and PDF downloads.</div><ul class="plan-features"><li>All articles, every issue</li><li>Full archive access</li><li>PDF downloads</li><li>Newsletter included</li></ul><div class="plan-cta">Subscribe — Digital</div></div>
+      <div class="plan plan-feat"><div class="plan-badge">Most popular</div><div class="plan-name">Print + Digital</div><div class="plan-price"><span>€</span>25</div><div class="plan-per">per quarter · or €85/year</div><div class="plan-desc">A physical copy of each issue posted to you, plus full digital access.</div><ul class="plan-features"><li>Physical copy posted</li><li>Full digital access</li><li>PDF downloads</li><li>EU shipping included</li></ul><div class="plan-cta">Subscribe — Print + Digital</div></div>
+      <div class="plan"><div class="plan-name">Supporter</div><div class="plan-price"><span>€</span>10</div><div class="plan-per">per month</div><div class="plan-desc">Everything in Digital, plus your name in the masthead and early access.</div><ul class="plan-features"><li>All digital access</li><li>Name in masthead</li><li>Early access — 48hrs before launch</li><li>Funds two Solidarity subscriptions</li></ul><div class="plan-cta">Subscribe — Supporter</div></div>
+    </div>
+    <div class="plan-grid-2">
+      <div class="plan"><div class="plan-name">Solidarity</div><div class="plan-price"><span>€</span>2</div><div class="plan-per">per month</div><div class="plan-desc">Full digital access at a reduced rate. No questions asked.</div><ul class="plan-features"><li>Full digital access</li><li>All articles and archive</li><li>No questions asked</li></ul><div class="plan-cta">Subscribe — Solidarity</div></div>
+      <div class="plan"><div class="plan-name">Institutional</div><div class="plan-price"><span>€</span>150</div><div class="plan-per">per year</div><div class="plan-desc">For libraries, universities, NGOs. Invoiced annually.</div><ul class="plan-features"><li>Full access for your organisation</li><li>PDF downloads</li><li>Annual invoice available</li><li>Contact us to set up</li></ul><div class="plan-cta">Contact us</div></div>
+    </div>
+  </div>
+  <div class="solidarity-box"><div><div class="sol-label">Pay it forward</div><h3 class="sol-title">Can't afford a subscription?<br>You can still read.</h3></div><div class="sol-body"><p>We don't ask for proof of anything. If the standard price is genuinely a barrier — you're a student, you're based in a low-income country — apply for free access. We will say yes.</p><p>We also offer geographic pricing. Readers in many lower-income countries are charged automatically at a rate that reflects local purchasing power.</p><a href="mailto:editor@elsewherequarterly.com" class="read-link">Apply for free access</a></div></div>
+  <div class="faq-wrap">
+    <div class="section-label">Common questions</div>
+    <div class="faq-item"><div class="faq-q">When does my subscription start?</div><div class="faq-a">Immediately. You get access to the full digital archive the moment your payment is confirmed.</div></div>
+    <div class="faq-item"><div class="faq-q">Can I cancel at any time?</div><div class="faq-a">Yes. Monthly subscriptions can be cancelled at any time from your account dashboard. Annual subscriptions are non-refundable but you keep access until the end of the year.</div></div>
+    <div class="faq-item"><div class="faq-q">Where do you ship print copies?</div><div class="faq-a">Currently within the EU. If you are outside the EU and want a print subscription, email us and we will work something out.</div></div>
+    <div class="faq-item"><div class="faq-q">Is my payment secure?</div><div class="faq-a">Yes. All payments are processed by Stripe. We never see or store your card details.</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE: SUBMIT                            -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-submit">
+  <div class="sub-page-hero container" style="padding-top:80px;padding-bottom:64px;border-bottom:1px solid var(--sand);">
+    <div><div class="section-tag">Submit your work</div><h1 class="page-title" style="font-size:clamp(44px,6vw,72px);">Send us something real.</h1></div>
+    <div style="padding-top:12px;"><p class="hero-intro" style="margin-bottom:20px;">We are looking for writing that comes from proximity. From inside an experience, not above it.</p><div class="open-tag"><div class="open-dot"></div> Open for submissions — Issue 1: Bombs</div></div>
+  </div>
+  <div class="container">
+    <div class="two-col">
+      <div class="col-label">Current open call</div>
+      <div class="col-body">
+        <div class="call-box"><div class="call-theme-tag">Issue 1 — Open call</div><div class="call-word">Bombs</div><p class="call-desc">What does explosive violence leave behind? In the body, in the land, in language, in memory. We are not looking for analysis from a distance. We are looking for writing from inside the experience.</p><div class="call-deadline">First draft deadline: <span>October 1, 2026</span></div></div>
+        <div class="pay-band"><div><h3>We pay our writers.</h3><p>Every published piece receives a fee paid within 30 days of publication. You retain full copyright.</p></div><div class="pay-amount"><span>€</span>200</div></div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="col-label">What we publish</div>
+      <div class="col-body">
+        <h2>Any form, if the form is right for the work.</h2>
+        <p>We publish six to eight pieces per issue across a range of forms. The theme is an invitation — what you make of it is yours.</p>
+        <div class="what-grid">
+          <div class="what-item"><h4>Essay</h4><p>Personal, argumentative, lyric. Any approach, as long as the thinking is yours.</p><div class="wc">2,000 — 5,000 words</div></div>
+          <div class="what-item"><h4>Reportage</h4><p>On-the-ground journalism. Sources, scenes, narrative. Fact-checked.</p><div class="wc">2,000 — 6,000 words</div></div>
+          <div class="what-item"><h4>Testimony</h4><p>First-person account. Lightly edited with your consent. The voice is primary.</p><div class="wc">1,500 — 4,000 words</div></div>
+          <div class="what-item"><h4>Fiction</h4><p>Short stories with a direct relationship to the theme.</p><div class="wc">1,500 — 5,000 words</div></div>
+          <div class="what-item"><h4>Poetry</h4><p>Sequences welcome. Formal intention and grounded language.</p><div class="wc">3 — 10 poems</div></div>
+          <div class="what-item"><h4>Photo Essay</h4><p>Images with captions and a short written introduction.</p><div class="wc">8 — 20 images</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="col-label">Before you submit</div>
+      <div class="col-body">
+        <h2>A few things to know.</h2>
+        <p>We read everything we receive and respond to every submission — usually within six weeks. We do not charge submission fees.</p>
+        <p>Your work must be original and previously unpublished in English, including on personal blogs or social media in substantial excerpts. We accept simultaneous submissions but ask that you notify us immediately if accepted elsewhere.</p>
+        <p>If your piece involves individuals who wish to remain anonymous, or testimony from people in vulnerable situations, please note this in your cover letter. We follow the Dart Center for Journalism and Trauma guidelines.</p>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="section-label">Submit your work</div>
+      <form class="sub-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="field"><label>First name *</label><input type="text" required placeholder="Your first name"></div>
+          <div class="field"><label>Last name *</label><input type="text" required placeholder="Your last name"></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>Email *</label><input type="email" required placeholder="your@email.com"></div>
+          <div class="field"><label>Country *</label><input type="text" required placeholder="Where you are based"></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>Piece title *</label><input type="text" required placeholder="Working title is fine"></div>
+          <div class="field"><label>Form *</label><select required><option value="">Select a form</option><option>Essay</option><option>Reportage</option><option>Testimony</option><option>Fiction</option><option>Poetry</option><option>Photo Essay</option></select></div>
+        </div>
+        <div class="field full"><label>Brief description *</label><textarea required placeholder="In 2–3 sentences, describe your piece and your relationship to the theme."></textarea></div>
+        <div class="field full"><label>Cover letter</label><textarea placeholder="Relevant background, previous publications, any context that helps us understand your work. Optional."></textarea></div>
+        <div class="field full"><label>Link to sample work</label><input type="url" placeholder="https://— a link to your work or a Google Doc"><div class="field-note">Optional but helpful.</div></div>
+        <div class="checkbox-field"><input type="checkbox" id="confirm" required><label for="confirm">I confirm this work is original, previously unpublished in English, and not accepted elsewhere.</label></div>
+        <div><button type="submit" class="submit-btn">Send submission</button><p class="form-note">We aim to respond within six weeks. All submissions are read by the editor. No submission fees.</p></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- NEWSLETTER + FOOTER (shown on all pages)-->
+<!-- ═══════════════════════════════════════ -->
+<div class="newsletter">
+  <h3>Stay close to the work.</h3>
+  <p>New conversations, essays, and issue announcements direct to your inbox.</p>
+  <div class="nl-row"><input type="email" placeholder="your@email.com"><button>Join us</button></div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div><div class="footer-logo">Elsewhere <span style="font-size:13px;font-style:normal;letter-spacing:0.18em;font-weight:400;color:var(--tan);font-family:var(--sans);">QUARTERLY</span></div><p class="footer-tagline">A quarterly journal of voices, organised around a single rotating theme each issue.</p></div>
+      <div class="footer-col"><h4>Read</h4><a onclick="showPage('home')">Current Issue</a><a onclick="showPage('issues')">Archive</a><a onclick="showPage('firstperson')">First Person</a></div>
+      <div class="footer-col"><h4>About</h4><a onclick="showPage('about')">Manifesto</a><a onclick="showPage('about')">Editorial team</a><a onclick="showPage('submit')">Submit writing</a></div>
+      <div class="footer-col"><h4>Subscribe</h4><a onclick="showPage('subscribe')">Digital — €5/mo</a><a onclick="showPage('subscribe')">Print + Digital</a><a onclick="showPage('subscribe')">Supporter</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Elsewhere Quarterly · All rights reserved</span><span>Published quarterly · Registered in Estonia</span></div>
+  </div>
+</footer>
+
+<script>
+const pages = ['home','about','issues','firstperson','subscribe','submit'];
+
+function showPage(id) {
+  pages.forEach(p => {
+    document.getElementById('page-' + p).classList.remove('active');
+    const nav = document.getElementById('nav-' + p);
+    if (nav) nav.classList.remove('active');
+  });
+  document.getElementById('page-' + id).classList.add('active');
+  const nav = document.getElementById('nav-' + id);
+  if (nav) nav.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showInterview() {
+  document.getElementById('fp-index').style.display = 'none';
+  document.getElementById('fp-interview').classList.add('show');
+  window.scrollTo(0, 0);
+}
+
+function hideInterview() {
+  document.getElementById('fp-index').style.display = 'block';
+  document.getElementById('fp-interview').classList.remove('show');
+  window.scrollTo(0, 0);
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.submit-btn');
+  btn.textContent = 'Sent — thank you.';
+  btn.style.background = '#4a6741';
+  btn.disabled = true;
+}
+</script>
+
+</body>
+</html>
