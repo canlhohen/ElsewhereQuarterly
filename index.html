@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subscribe — Elsewhere Quarterly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f7f3ed; --warm-white: #fdfaf6; --sand: #e8e0d4;
+    --tan: #c9bfb0; --brown: #7a6a58; --bark: #3d3028;
+    --rust: #b85c38; --rust-light: #f5e9e3;
+    --serif: 'Lora', Georgia, serif; --sans: 'Nunito', system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--sans); background: var(--warm-white); color: var(--bark); font-size: 15px; line-height: 1.7; }
+  a { color: inherit; text-decoration: none; }
+  body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: 0.022;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E"); }
+
+  nav { padding: 0 48px; height: 60px; display: flex; align-items: center; justify-content: space-between; background: var(--warm-white); border-bottom: 1px solid var(--sand); position: sticky; top: 0; z-index: 100; }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { font-size: 13px; font-weight: 500; color: var(--brown); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--rust); }
+  .nav-logo { font-family: var(--serif); font-size: 20px; font-weight: 600; font-style: italic; color: var(--bark); position: absolute; left: 50%; transform: translateX(-50%); }
+  .nav-logo span { font-size: 11px; font-style: normal; letter-spacing: 0.18em; font-weight: 400; display: block; text-align: center; margin-top: -4px; color: var(--brown); font-family: var(--sans); }
+  .nav-actions { display: flex; align-items: center; gap: 20px; }
+  .nav-actions a { font-size: 13px; font-weight: 500; color: var(--brown); transition: color 0.2s; }
+  .btn-sub { background: var(--rust); color: white !important; padding: 8px 20px; border-radius: 2px; font-size: 12px !important; font-weight: 600 !important; transition: background 0.2s !important; }
+  .btn-sub:hover { background: var(--bark) !important; }
+
+  .hero { padding: 80px 48px 64px; max-width: 900px; margin: 0 auto; text-align: center; border-bottom: 1px solid var(--sand); }
+  .hero-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rust); margin-bottom: 20px; }
+  .hero-title { font-family: var(--serif); font-size: clamp(40px, 6vw, 64px); font-weight: 400; font-style: italic; line-height: 1.1; color: var(--bark); margin-bottom: 20px; }
+  .hero-desc { font-size: 16px; color: var(--brown); line-height: 1.8; max-width: 520px; margin: 0 auto; }
+
+  .pricing-wrap { max-width: 1100px; margin: 0 auto; padding: 72px 48px; }
+
+  .pricing-note { text-align: center; margin-bottom: 48px; }
+  .pricing-note p { font-size: 14px; color: var(--brown); line-height: 1.7; max-width: 560px; margin: 0 auto; }
+  .pricing-note strong { color: var(--bark); }
+
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px; }
+  .pricing-grid-bottom { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 720px; margin: 0 auto 56px; }
+
+  .plan {
+    padding: 36px 28px;
+    border: 1.5px solid var(--sand);
+    background: white;
+    position: relative;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .plan:hover { border-color: var(--rust); box-shadow: 6px 6px 0 var(--rust-light); }
+  .plan.featured { border-color: var(--rust); background: var(--rust-light); }
+  .plan.featured .plan-badge { display: block; }
+
+  .plan-badge { display: none; position: absolute; top: -12px; left: 28px; background: var(--rust); color: white; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 12px; }
+
+  .plan-name { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brown); margin-bottom: 12px; }
+  .plan-price { font-family: var(--serif); font-size: 44px; font-weight: 400; color: var(--bark); line-height: 1; margin-bottom: 4px; }
+  .plan-price span { font-size: 18px; }
+  .plan-per { font-size: 12px; color: var(--tan); margin-bottom: 20px; font-weight: 600; }
+  .plan-desc { font-size: 13px; color: var(--brown); line-height: 1.65; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--sand); }
+  .plan-features { list-style: none; }
+  .plan-features li { font-size: 13px; color: var(--brown); padding: 6px 0; display: flex; align-items: flex-start; gap: 8px; }
+  .plan-features li::before { content: '—'; color: var(--rust); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .plan-cta { display: block; margin-top: 24px; padding: 12px; text-align: center; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: var(--bark); color: white; transition: background 0.2s; cursor: pointer; }
+  .plan-cta:hover { background: var(--rust); }
+  .plan.featured .plan-cta { background: var(--rust); }
+  .plan.featured .plan-cta:hover { background: var(--bark); }
+
+  .solidarity-note { background: var(--cream); border: 1px solid var(--sand); padding: 36px; max-width: 1100px; margin: 0 auto 72px; display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: center; }
+  .solidarity-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rust); margin-bottom: 8px; }
+  .solidarity-note h3 { font-family: var(--serif); font-size: 24px; font-weight: 400; color: var(--bark); line-height: 1.3; }
+  .solidarity-note p { font-size: 14px; color: var(--brown); line-height: 1.75; margin-bottom: 12px; }
+  .solidarity-note p:last-child { margin-bottom: 0; }
+  .apply-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--bark); border-bottom: 1px solid var(--bark); padding-bottom: 2px; transition: color 0.2s; }
+  .apply-link:hover { color: var(--rust); border-color: var(--rust); }
+
+  .faq { max-width: 720px; margin: 0 auto; padding: 0 48px 72px; }
+  .faq-label { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tan); margin-bottom: 36px; display: flex; align-items: center; gap: 16px; }
+  .faq-label::after { content: ''; flex: 1; height: 1px; background: var(--sand); }
+  .faq-item { padding: 20px 0; border-bottom: 1px solid var(--sand); }
+  .faq-q { font-family: var(--serif); font-size: 17px; font-weight: 500; color: var(--bark); margin-bottom: 8px; }
+  .faq-a { font-size: 14px; color: var(--brown); line-height: 1.75; }
+
+  footer { background: var(--bark); color: var(--sand); padding: 56px 48px 32px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 32px; }
+  .footer-logo { font-family: var(--serif); font-size: 26px; font-style: italic; font-weight: 600; color: var(--cream); margin-bottom: 12px; }
+  .footer-tagline { font-size: 13px; color: var(--tan); line-height: 1.7; max-width: 260px; }
+  .footer-col h4 { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--tan); margin-bottom: 16px; }
+  .footer-col a { display: block; font-size: 13px; color: rgba(201,191,176,0.7); margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--cream); }
+  .footer-bottom { display: flex; justify-content: space-between; font-size: 11px; color: rgba(201,191,176,0.4); padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; height: 52px; }
+    .nav-links { display: none; }
+    .nav-logo { position: static; transform: none; font-size: 18px; }
+    .nav-actions a:not(.btn-sub) { display: none; }
+    .hero { padding: 48px 20px 40px; }
+    .pricing-wrap { padding: 48px 20px; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .pricing-grid-bottom { grid-template-columns: 1fr; max-width: 100%; }
+    .solidarity-note { grid-template-columns: 1fr; gap: 20px; }
+    .faq { padding: 0 20px 48px; }
+    footer { padding: 40px 20px 24px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .footer-bottom { flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-links">
+    <a href="/index.html">Read</a>
+    <a href="/issues/index.html">Issues</a>
+    <a href="/first-person/index.html">First Person</a>
+    <a href="/about/index.html">About</a>
+    <a href="/submit/index.html">Submit</a>
+  </div>
+  <a href="/index.html" class="nav-logo">Elsewhere <span>QUARTERLY</span></a>
+  <div class="nav-actions">
+    <a href="#">Sign in</a>
+    <a href="#" class="btn-sub">Subscribe</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Subscribe</div>
+  <h1 class="hero-title">Read the voices that rarely get a byline.</h1>
+  <p class="hero-desc">Four issues a year, built around a single theme. No algorithm. No noise. Just writing from people closest to the story.</p>
+</div>
+
+<div class="pricing-wrap">
+
+  <div class="pricing-note">
+    <p>We believe writing about the world should be readable by the world. <strong>Every Supporter subscription funds two Solidarity subscriptions.</strong> If you cannot afford a subscription, you can have one — no questions asked.</p>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="plan">
+      <div class="plan-badge">Most popular</div>
+      <div class="plan-name">Digital</div>
+      <div class="plan-price"><span>€</span>5</div>
+      <div class="plan-per">per month · or €45/year</div>
+      <div class="plan-desc">Full access to every article, all back issues, and PDF downloads.</div>
+      <ul class="plan-features">
+        <li>All articles, every issue</li>
+        <li>Full archive access</li>
+        <li>PDF downloads</li>
+        <li>Newsletter included</li>
+      </ul>
+      <div class="plan-cta">Subscribe — Digital</div>
+    </div>
+
+    <div class="plan featured">
+      <div class="plan-badge">Print + Digital</div>
+      <div class="plan-name">Print + Digital</div>
+      <div class="plan-price"><span>€</span>25</div>
+      <div class="plan-per">per quarter · or €85/year</div>
+      <div class="plan-desc">A physical copy of each issue posted to you, plus full digital access.</div>
+      <ul class="plan-features">
+        <li>Physical copy posted to you</li>
+        <li>Full digital access</li>
+        <li>PDF downloads</li>
+        <li>EU shipping included</li>
+      </ul>
+      <div class="plan-cta">Subscribe — Print + Digital</div>
+    </div>
+
+    <div class="plan">
+      <div class="plan-name">Supporter</div>
+      <div class="plan-price"><span>€</span>10</div>
+      <div class="plan-per">per month</div>
+      <div class="plan-desc">Everything in Digital, plus your name in the masthead and early access to each issue.</div>
+      <ul class="plan-features">
+        <li>All digital access</li>
+        <li>Name in masthead</li>
+        <li>Early access — 48hrs before launch</li>
+        <li>Funds two Solidarity subscriptions</li>
+      </ul>
+      <div class="plan-cta">Subscribe — Supporter</div>
+    </div>
+  </div>
+
+  <div class="pricing-grid-bottom">
+    <div class="plan">
+      <div class="plan-name">Solidarity</div>
+      <div class="plan-price"><span>€</span>2</div>
+      <div class="plan-per">per month</div>
+      <div class="plan-desc">Full digital access at a reduced rate. For readers for whom the standard price is a barrier.</div>
+      <ul class="plan-features">
+        <li>Full digital access</li>
+        <li>All articles and archive</li>
+        <li>No questions asked</li>
+      </ul>
+      <div class="plan-cta">Subscribe — Solidarity</div>
+    </div>
+
+    <div class="plan">
+      <div class="plan-name">Institutional</div>
+      <div class="plan-price"><span>€</span>150</div>
+      <div class="plan-per">per year</div>
+      <div class="plan-desc">For libraries, universities, NGOs, and cultural institutions. Invoiced annually.</div>
+      <ul class="plan-features">
+        <li>Full digital access for your organisation</li>
+        <li>PDF downloads</li>
+        <li>Annual invoice available</li>
+        <li>Contact us to set up</li>
+      </ul>
+      <div class="plan-cta">Contact us</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="solidarity-note" style="padding: 36px 48px; max-width: calc(1100px + 96px); margin: 0 auto 72px; padding-left: 48px; padding-right: 48px;">
+  <div>
+    <div class="solidarity-label">Pay it forward</div>
+    <h3>Can't afford a subscription?<br>You can still read.</h3>
+  </div>
+  <div>
+    <p>We don't ask for proof of anything. If the standard price is genuinely a barrier for you — you're a student, you're based in a low-income country, you're going through a difficult period — apply for free access. We will say yes.</p>
+    <p>We also offer geographic pricing. Readers in many lower-income countries are charged automatically at a rate that reflects local purchasing power. If you are not sure whether this applies to you, just email us.</p>
+    <a href="mailto:editor@elsewherequarterly.com" class="apply-link">Apply for free access →</a>
+  </div>
+</div>
+
+<div class="faq">
+  <div class="faq-label">Common questions</div>
+  <div class="faq-item">
+    <div class="faq-q">When does my subscription start?</div>
+    <div class="faq-a">Immediately. You get access to the full digital archive the moment your payment is confirmed.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Can I cancel at any time?</div>
+    <div class="faq-a">Yes. Monthly subscriptions can be cancelled at any time from your account dashboard. Annual subscriptions are non-refundable but you keep access until the end of the year.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Where do you ship print copies?</div>
+    <div class="faq-a">Currently within the EU. We are working on expanding to the UK, US, and further. If you are outside the EU and want a print subscription, email us and we will work something out.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What is the Solidarity rate?</div>
+    <div class="faq-a">€2/month for full digital access. No verification required. We trust you. Every Supporter subscription funds two Solidarity subscriptions — if you choose to pay more, you are directly subsidising access for someone who cannot.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">How do I set up an institutional subscription?</div>
+    <div class="faq-a">Email us at editor@elsewherequarterly.com. We will send you an invoice and set up access for your library, department, or organisation.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Is my payment secure?</div>
+    <div class="faq-a">Yes. All payments are processed by Stripe, one of the world's most trusted payment platforms. We never see or store your card details.</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Elsewhere <span style="font-size:13px;font-style:normal;letter-spacing:0.18em;font-weight:400;color:var(--tan);font-family:var(--sans);">QUARTERLY</span></div>
+        <p class="footer-tagline">A quarterly journal of voices, organised around a single rotating theme each issue.</p>
+      </div>
+      <div class="footer-col"><h4>Read</h4><a href="/index.html">Current Issue</a><a href="/issues/index.html">Archive</a><a href="/first-person/index.html">First Person</a><a href="#">Free articles</a></div>
+      <div class="footer-col"><h4>About</h4><a href="/about/index.html">Manifesto</a><a href="/about/index.html">Editorial team</a><a href="/submit/index.html">Submit writing</a><a href="#">Contact</a></div>
+      <div class="footer-col"><h4>Subscribe</h4><a href="#">Digital — €5/mo</a><a href="#">Print + Digital</a><a href="#">Supporter</a><a href="#">Institutions</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Elsewhere Quarterly · All rights reserved</span>
+      <span>Published quarterly · Registered in Estonia</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
